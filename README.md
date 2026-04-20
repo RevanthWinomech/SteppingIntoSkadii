@@ -11,3 +11,4 @@ The objective of this project is to start your C# journey with some basic tools 
  - which means you should create the docker images for the db and create a init.db  file
  - I should be able to check your code against the docker file specified for the db
  - Should be able to test in postman (POST + GET) 
+ -  test
