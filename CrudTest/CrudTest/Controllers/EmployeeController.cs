@@ -26,6 +26,19 @@ namespace CrudTest.Controllers
             return Ok("employee added");
         }
 
+        [HttpGet("latest")]
+
+        public async Task<IActionResult> GetLatestEmployee()
+        {
+            var emp=await _employeeService.GetEmployeeAsync();
+
+            if(emp==null) 
+                {
+                return NotFound("no employee found");
+                }
+            return Ok(emp);
+        }
+
 
 
     }

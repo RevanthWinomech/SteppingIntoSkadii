@@ -7,6 +7,8 @@
         public int EmployeeId {  get; set; }
 
         public string EmployeeDept { get; set;  }
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 
 }
