@@ -1,19 +1,30 @@
 ﻿using CrudTest.Data;
 using CrudTest.Models;
+using CrudTest.Services;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace CrudTest.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class EmployeeController : Controller
     {
+        private readonly EmployeeService _employeeService;
 
-        private readonly EmployeeDbContext _employeeDbContext;
-
-        public EmployeeController(EmployeeDbContext employeeDbContext)
+        public EmployeeController(EmployeeService employeeService)
         {
-            _employeeDbContext = employeeDbContext;
+            _employeeService= employeeService;
         }
 
+
+        [HttpPost]
+
+        public async Task<IActionResult> CreateEmployee([FromBody] Employee employee)
+        {
+            await _employeeService.AddEmployee(employee);
+            return Ok("employee added");
+        }
 
 
 
