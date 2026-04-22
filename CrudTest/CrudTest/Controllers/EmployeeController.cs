@@ -26,7 +26,7 @@ namespace CrudTest.Controllers
             return Ok("employee added");
         }
 
-        [HttpGet("latest")]
+        [HttpGet]
 
         public async Task<IActionResult> GetLatestEmployee()
         {
