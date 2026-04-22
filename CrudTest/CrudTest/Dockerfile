@@ -1,17 +1,21 @@
 # Stage 1: Build
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build   #download sdk from ms
-WORKDIR /app   #Create folder "app" , docker works inside this directory
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
-COPY CrudTest.csproj ./  #Copy project file into container
-RUN dotnet restore    #Download NuGet packages, restore dependencies
+WORKDIR /app
 
-COPY . ./  #Copy all project files into container
-RUN dotnet publish -c Release -o out  #Build application , create publish-ready output
+COPY *.csproj ./
+RUN dotnet restore
+
+COPY . .
+RUN dotnet publish -c Release -o /publish
 
 # Stage 2: Runtime
-FROM mcr.microsoft.com/dotnet/aspnet:10.0  #Only runs app
-WORKDIR /app  #docker works inside this directory
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 
-COPY --from=build /app/out ./
+WORKDIR /app
 
-ENTRYPOINT ["dotnet", "CrudTest.dll"]  #Start app when container runs
+COPY --from=build /publish .
+
+EXPOSE 8080
+
+ENTRYPOINT ["dotnet", "CrudTest.dll"]
