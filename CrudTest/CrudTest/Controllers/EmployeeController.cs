@@ -26,6 +26,19 @@ namespace CrudTest.Controllers
             return Ok("employee added");
         }
 
+        [HttpGet("allEmployees")]
+
+        public async Task<IActionResult> FetchAllEmployees()
+        {
+            List<Employee> employees=await _employeeService.GetAllEmployees();
+            if(employees==null || employees.Count == 0)
+            {
+                return NotFound();
+            }
+            return Ok(employees);
+        }
+
+
         [HttpGet]
 
         public async Task<IActionResult> GetLatestEmployee()

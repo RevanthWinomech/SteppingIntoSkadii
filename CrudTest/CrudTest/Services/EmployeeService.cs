@@ -32,6 +32,14 @@ namespace CrudTest.Services
             await _employeeDbContext.SaveChangesAsync();
         }
 
+        //get all employees
+
+        public async Task<List<Employee>> GetAllEmployees()
+        {
+            return await _employeeDbContext.Employees.ToListAsync();
+
+        }
+
         // get employee latest
 
         public async Task<Employee?> GetEmployeeAsync()
