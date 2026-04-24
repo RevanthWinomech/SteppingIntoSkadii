@@ -38,6 +38,19 @@ namespace CrudTest.Controllers
             return Ok(employees);
         }
 
+        [HttpGet("{EmployeeId}")]
+
+        public async Task<IActionResult> FetchById(int EmployeeId)
+        {
+             var employee= await _employeeService.GetEmployeeById(EmployeeId);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            return Ok(employee);
+
+        }
+
 
         [HttpGet]
 

@@ -40,6 +40,14 @@ namespace CrudTest.Services
 
         }
 
+        //get by id
+
+        public async Task<Employee> GetEmployeeById(int EmployeeId)
+        {
+            return await _employeeDbContext.Employees.FindAsync(EmployeeId);
+           
+        }
+
         // get employee latest
 
         public async Task<Employee?> GetEmployeeAsync()
