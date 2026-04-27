@@ -1,0 +1,34 @@
+
+
+services:
+  postgres-db:
+    image: postgres:latest
+    container_name: my-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: myworld
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 8637
+    ports:
+      - "5432:5432"
+    networks:
+      - my-network
+
+  crud-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crud-api
+    restart: always
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres-db
+    environment:
+      ConnectionStrings__DefaultConnection: Host=postgres-db;Port=5432;Database=myworld;Username=postgres;Password=8637
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
