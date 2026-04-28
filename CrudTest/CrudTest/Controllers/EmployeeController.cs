@@ -16,7 +16,7 @@ namespace CrudTest.Controllers
         {
             _employeeService= employeeService;
         }
-
+        //create employee
 
         [HttpPost]
 
@@ -26,6 +26,7 @@ namespace CrudTest.Controllers
             return Ok("employee added");
         }
 
+        //get all employees
         [HttpGet("allEmployees")]
 
         public async Task<IActionResult> FetchAllEmployees()
@@ -37,7 +38,7 @@ namespace CrudTest.Controllers
             }
             return Ok(employees);
         }
-
+        //get employee by id
         [HttpGet("{EmployeeId}")]
 
         public async Task<IActionResult> FetchById(int EmployeeId)
@@ -50,7 +51,7 @@ namespace CrudTest.Controllers
             return Ok(employee);
 
         }
-
+        //get latest employee
 
         [HttpGet]
 
@@ -64,6 +65,36 @@ namespace CrudTest.Controllers
                 }
             return Ok(emp);
         }
+
+        //update employee
+        [HttpPut("update/{EmployeeId}")]
+        public async Task<IActionResult> UpdateEmployee(int EmployeeId, [FromBody] Employee employee)
+        {
+            var updated = await _employeeService.UpdateEmployee(EmployeeId, employee);
+
+            if (updated == null)
+            {
+                return BadRequest("employee not found");
+            }
+
+            return Ok("updated successfully");
+        }
+
+        //delete by id
+
+        [HttpDelete("{EmployeeId}")]
+        public async Task<IActionResult> DeleteEmployee(int EmployeeId)
+        {
+            var deleted = await _employeeService.DeleteEmployee(EmployeeId);
+
+            if (!deleted)
+            {
+                return NotFound("Employee not found");
+            }
+
+            return Ok("Employee deleted");
+        }
+
 
 
 

@@ -19,16 +19,8 @@ namespace CrudTest.Services
          
         public async Task AddEmployee(Employee employeeRequest)
         {
-            var employee = new Employee
-            {
 
-                EmployeeName = employeeRequest.EmployeeName,
-                EmployeeId = employeeRequest.EmployeeId,
-                EmployeeDept = employeeRequest.EmployeeDept
-
-            };
-
-            _employeeDbContext.Employees.Add(employee);
+            _employeeDbContext.Employees.Add(employeeRequest);
             await _employeeDbContext.SaveChangesAsync();
         }
 
@@ -57,7 +49,42 @@ namespace CrudTest.Services
                 .FirstOrDefaultAsync();
         }
 
-        //update
+        //update employee
+        
+        public async Task<bool> UpdateEmployee(int EmployeeId, Employee employee)
+        {
+            var updated = await _employeeDbContext.Employees
+                .FirstOrDefaultAsync(x => x.EmployeeId == EmployeeId);
+
+            if (updated == null)
+            {
+                return false;
+            }
+
+            updated.EmployeeName = employee.EmployeeName;
+            updated.EmployeeDept = employee.EmployeeDept;
+
+            await _employeeDbContext.SaveChangesAsync();
+
+            return true;
+        }
+
+        //delete employee
+
+        public async Task<bool> DeleteEmployee(int EmployeeId)
+        {
+            var employee = await _employeeDbContext.Employees.FindAsync(EmployeeId);
+
+            if (employee == null)
+                return false;
+
+            _employeeDbContext.Employees.Remove(employee);
+            await _employeeDbContext.SaveChangesAsync();
+
+            return true;
+        }
+
+
 
 
 
